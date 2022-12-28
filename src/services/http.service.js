@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://jsonplaceholder.typicode.com1/";
+axios.defaults.baseURL = "https://jsonplaceholder.typicode.com/";
 
 const httpService = {
   get: axios.get,

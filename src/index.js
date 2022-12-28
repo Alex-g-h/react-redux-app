@@ -6,9 +6,9 @@ import {
   completeTask,
   getTasks,
 } from "./store/task";
-import configureStore from "./store/store";
+import createStore from "./store/store";
 
-const store = configureStore();
+const store = createStore();
 
 const App = (params) => {
   const [state, setState] = useState(store.getState());
