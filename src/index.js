@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import {
   titleChanged,
@@ -7,15 +7,15 @@ import {
   getTasks,
 } from "./store/task";
 import createStore from "./store/store";
+import { Provider, useSelector } from "react-redux";
 
 const store = createStore();
 
 const App = (params) => {
-  const [state, setState] = useState(store.getState());
+  const state = useSelector((state) => state);
 
   useEffect(() => {
     store.dispatch(getTasks());
-    store.subscribe(() => setState(store.getState()));
   }, []);
 
   const changeTitle = (taskId) => {
@@ -66,6 +66,8 @@ const App = (params) => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
