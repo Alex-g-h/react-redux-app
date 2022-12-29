@@ -7,23 +7,24 @@ import {
   getTasks,
 } from "./store/task";
 import createStore from "./store/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 
 const store = createStore();
 
 const App = (params) => {
   const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    store.dispatch(getTasks());
+    dispatch(getTasks());
   }, []);
 
   const changeTitle = (taskId) => {
-    store.dispatch(titleChanged(taskId));
+    dispatch(titleChanged(taskId));
   };
 
   const deleteTask = (taskId) => {
-    store.dispatch(taskDeleted(taskId));
+    dispatch(taskDeleted(taskId));
   };
 
   return (
@@ -36,7 +37,7 @@ const App = (params) => {
             <p>Completed: {`${el.completed}`}</p>
             <button
               onClick={() => {
-                store.dispatch(completeTask(el.id));
+                dispatch(completeTask(el.id));
               }}
             >
               Complete
