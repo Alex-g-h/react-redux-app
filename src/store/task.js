@@ -32,11 +32,15 @@ const taskSlice = createSlice({
     taskRequestFailed(state) {
       state.isLoading = false;
     },
+    create(state, action) {
+      state.entities.push(action.payload);
+    },
   },
 });
 
 const { actions, reducer: taskReducer } = taskSlice;
-const { update, remove, received, taskRequested, taskRequestFailed } = actions;
+const { update, remove, received, taskRequested, taskRequestFailed, create } =
+  actions;
 
 export const completeTask = (id) => (dispatch, getState) => {
   dispatch(update({ id, completed: true }));
@@ -57,6 +61,15 @@ export const loadTasks = () => async (dispatch) => {
     dispatch(received(data));
   } catch (error) {
     dispatch(taskRequestFailed());
+    dispatch(setError(error.message));
+  }
+};
+
+export const taskCreate = (payload) => async (dispatch) => {
+  try {
+    const data = await todosService.create(payload);
+    dispatch(create(data));
+  } catch (error) {
     dispatch(setError(error.message));
   }
 };
